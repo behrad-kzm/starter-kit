@@ -1,0 +1,72 @@
+---
+description: Project documentation system — concepts, plans, prompts. Link never copy. Ask before editing existing docs.
+alwaysApply: true
+---
+
+# Documentation system
+
+## Goal
+
+Write docs so a coding assistant reads the fewest tokens. Open only the files required for the current task.
+
+## Locations and names
+
+- Concept or reusable term: `docs/concepts/c-<slug>.md`
+- Plan: `docs/plans/p-<slug>.md`
+- Prompt: `docs/prompts/<slug>/YYYY-MM-DD-HHmm-<action>-<slug>-phase-<n>.md`
+- Map: `docs/README.md`
+
+`<slug>` is kebab-case. Prompt folder uses the feature slug with no `c-` or `p-` prefix.
+
+Example: concept `docs/concepts/c-player-inventory.md`, plan `docs/plans/p-player-inventory.md`, prompt `docs/prompts/player-inventory/2026-09-27-1204-add-player-inventory-phase-1.md`
+
+## One definition
+
+Each idea or term is defined in exactly one file. Other files link to it. Never copy or restate a definition.
+
+Link form: `[Player inventory](../concepts/c-player-inventory.md)`
+
+## Index
+
+`docs/README.md` is links only: title + path. No summaries. Adding a new link there does not need permission. Changing definition text does.
+
+## Permission
+
+Do not edit an existing concept, plan, prompt, or this rule unless the developer gives explicit permission in the same conversation. New files are allowed.
+
+## Conflicts
+
+Before adding a file, open the related existing docs via their links. If anything conflicts, stop and ask. Do not silently rewrite the old doc.
+
+## Concept
+
+One file. Holistic. Defines the idea, high-level feature or vision, and the value it adds to the system. Not an implementation spec.
+
+## Plan
+
+How to add one or more features to the current project.
+
+- Functional and non-functional requirements (link to concepts; do not redefine them)
+- One or more phases
+- Each phase has one or more implementation prompts
+
+## Prompt
+
+Implementation instructions for one plan phase. The assistant must not guess.
+
+- Filename and the first lines include the timestamp `YYYY-MM-DD-HHmm`
+- Link the plan and every concept the work depends on
+- Super detailed: files, behavior, acceptance, out of scope
+
+### Before writing a prompt
+
+1. List every vague point.
+2. For each point, recommend an option and give alternatives.
+3. Wait for the developer to decide.
+4. Write the prompt from those decisions.
+
+Design decisions belong to the developer. Recommendations are advisory.
+
+## Read path
+
+Need a term → open that one concept file. Implementing a phase → open that prompt + only the concepts it links. Do not load the whole `docs/` tree.
